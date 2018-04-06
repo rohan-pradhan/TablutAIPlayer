@@ -3,6 +3,7 @@ package student_player;
 import boardgame.Move;
 import tablut.TablutBoardState;
 import tablut.TablutPlayer;
+import student_player.MonteCarloAlgorithm;
 
 /** A player file submitted by a student. */
 public class StudentPlayer extends TablutPlayer {
@@ -12,8 +13,12 @@ public class StudentPlayer extends TablutPlayer {
      * important, because this is what the code that runs the competition uses to
      * associate you with your agent. The constructor should do nothing else.
      */
+	
+	MonteCarloAlgorithm strategyAlgorithm;
+	
     public StudentPlayer() {
-        super("xxxxxxxxx");
+        super("260613559");
+        strategyAlgorithm = new MonteCarloAlgorithm(player_id);
     }
 
     /**
@@ -26,9 +31,15 @@ public class StudentPlayer extends TablutPlayer {
         // For example, maybe you'll need to load some pre-processed best opening
         // strategies...
         MyTools.getSomething();
+        
 
         // Is random the best you can do?
-        Move myMove = boardState.getRandomMove();
+//       boolean flag = boardState.getTurnNumber() == 0);
+//        Move myMove = strategyAlgorithm.strategyMove(boardState, boardState.getTurnNumber()==0);
+        
+        Move myMove = strategyAlgorithm.strategyMove(boardState, false);
+
+//        myMove = null;
 
         // Return your move to be processed by the server.
         return myMove;
