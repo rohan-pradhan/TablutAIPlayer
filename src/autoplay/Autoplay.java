@@ -43,6 +43,10 @@ public class Autoplay {
                     "boardgame.Client", "student_player.StudentPlayer");
             client1_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
+//            ProcessBuilder client2_pb = new ProcessBuilder("java", "-cp", "bin", "-Xms520m", "-Xmx520m",
+//                    "boardgame.Client", "tablut.RandomTablutPlayer");
+//            client2_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+            
             ProcessBuilder client2_pb = new ProcessBuilder("java", "-cp", "bin", "-Xms520m", "-Xmx520m",
                     "boardgame.Client", "tablut.RandomTablutPlayer");
             client2_pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
@@ -57,6 +61,7 @@ public class Autoplay {
                 }
 
                 Process client1 = ((i % 2 == 0) ? client1_pb.start() : client2_pb.start());
+//                Process client1 = ((i % 1 == 0) ? client1_pb.start() : client2_pb.start());
 
                 try {
                     Thread.sleep(500);
@@ -65,6 +70,7 @@ public class Autoplay {
                 }
 
                 Process client2 = ((i % 2 == 0) ? client2_pb.start() : client1_pb.start());
+//                Process client2 = ((i % 1 == 0) ? client2_pb.start() : client1_pb.start());
 
                 try {
                     client1.waitFor();

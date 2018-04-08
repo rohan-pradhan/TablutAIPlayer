@@ -18,7 +18,7 @@ public class StudentPlayer extends TablutPlayer {
 	
     public StudentPlayer() {
         super("260613559");
-        strategyAlgorithm = new MonteCarloAlgorithm(player_id);
+        strategyAlgorithm = new MonteCarloAlgorithm();
     }
 
     /**
@@ -30,18 +30,19 @@ public class StudentPlayer extends TablutPlayer {
         // You probably will make separate functions in MyTools.
         // For example, maybe you'll need to load some pre-processed best opening
         // strategies...
-        MyTools.getSomething();
+//        MyTools.getSomething();
         
+//    	System.out.println("PlayerID is: " + player_id);
 
         // Is random the best you can do?
 //       boolean flag = boardState.getTurnNumber() == 0);
 //        Move myMove = strategyAlgorithm.strategyMove(boardState, boardState.getTurnNumber()==0);
         
-        Move myMove = strategyAlgorithm.strategyMove(boardState, false);
+//        Move myMove = strategyAlgorithm.strategyMove(boardState, false);
 
 //        myMove = null;
 
         // Return your move to be processed by the server.
-        return myMove;
+        return strategyAlgorithm.strategyMove(boardState, false, player_id);
     }
 }

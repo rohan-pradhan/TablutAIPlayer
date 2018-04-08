@@ -103,6 +103,12 @@ public class Server implements Runnable {
     // This is a history, if the game wasn't started from scratch
     private Move[] history = null;
     private boolean playingHistory = false;
+    public static int gamesPlayed = 0;
+    public static int blackWins = 0;
+    public static int blackTotal =0;
+    public static int whiteWins = 0;
+    public static int whiteTotal =0;
+
 
     private static void printUsage() {
         System.err.println("\nUsage: java boardgame.Server [-p port] [-ng] [-q] [-t n] [-b class]\n"
@@ -207,16 +213,20 @@ public class Server implements Runnable {
     public Server(Board b, boolean createGUI, boolean qt, ServerSocket ss, int to, int fto) {
         this(b, createGUI, qt, ss.getLocalPort(), to, fto);
         this.svrSock = ss;
+
     }
 
     /** Create a server which will create its own socket to listen on */
     public Server(Board b, boolean createGUI) {
         this(b, createGUI, cmdArgQuiet, cmdArgPort, cmdArgTimeout, cmdArgFirstTimeout);
+    
     }
 
     /** Create a server which will create its own socket to listen on */
     public Server(Board b, boolean createGUI, boolean qt, int svPort, int to, int fto) {
-        this.board = b;
+    
+    	this.board = b;
+        
         this.port = svPort;
         this.timeout = to;
         this.first_move_timeout = fto;
@@ -560,6 +570,24 @@ public class Server implements Runnable {
             break;
         default:
             msg += "WINNER " + board.getWinner();
+            
+            
+            if (gamesPlayed % 2 == 0){
+            	blackTotal +=1;
+            	if (board.getWinner() == 0){
+            		blackWins+=1;	
+            	}
+            }
+            if (gamesPlayed % 2 == 1){
+            	whiteTotal +=1;
+            	if (board.getWinner() == 1){
+            		whiteWins+=1;	
+            	}
+            }
+            double blackRatio = blackTotal !=0 ? (double)((double)blackWins/(double)blackTotal) : 0;
+            double whiteRatio = whiteTotal !=0 ? (double)((double)whiteWins/(double)whiteTotal) : 0;
+            msg += " Number of Wins black:  " + blackRatio + " white wins: " +  whiteRatio; 
+            gamesPlayed+=1;
         }
 
         if (gui != null)

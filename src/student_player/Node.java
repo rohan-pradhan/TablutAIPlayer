@@ -6,14 +6,16 @@ import tablut.TablutBoardState;
 import tablut.TablutMove;
 import tablut.TablutPlayer;
 
-public class Node {
-	private int numberOfVisits; 
-	private double currentAverageScore;
+public class Node implements Comparable<Node> {
+	public int numberOfVisits; 
+	public double currentAverageScore;
 	private TablutBoardState currentState;
 	private ArrayList<Node> children;
 	private Node parentNode; 
 	private TablutMove moveToBestState;
 	private TablutMove moveToGetHere;
+	public int numberOfPieces;
+	public int numberOfMoves;
 	
 	public TablutMove getMoveToGetHere() {
 		return moveToGetHere;
@@ -29,6 +31,7 @@ public class Node {
 		currentState = aCurrentState; 
 		children = new ArrayList<Node>();
 		parentNode = null;
+		numberOfPieces = aCurrentState.getNumberPlayerPieces((aCurrentState.getTurnPlayer()));
 		
 	}
 	
@@ -38,6 +41,8 @@ public class Node {
 		currentState = aCurrentState; 
 		children = new ArrayList<Node>();
 		parentNode = parent;
+		numberOfPieces = aCurrentState.getNumberPlayerPieces((aCurrentState.getTurnPlayer()));
+		
 		
 	}
 	
@@ -48,6 +53,8 @@ public class Node {
 		children = new ArrayList<Node>();
 		parentNode = parent;
 		moveToGetHere = aMove;
+		numberOfPieces = aCurrentState.getNumberPlayerPieces((aCurrentState.getTurnPlayer()));
+	
 		
 	}
 	
@@ -102,6 +109,12 @@ public class Node {
 
 	public void setChildren(ArrayList<Node> children) {
 		this.children = children;
+	}
+
+	@Override
+	public int compareTo(Node o) {
+		// TODO Auto-generated method stub
+		return Integer.compare(this.numberOfPieces, o.numberOfPieces);
 	}
 	
 	
